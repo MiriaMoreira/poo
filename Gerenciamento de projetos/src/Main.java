@@ -25,43 +25,68 @@ public class Main {
             input.nextLine();
 
 
-            String username;
+            String email, name, password;
 
             switch (n){
                 case 1:
-                    System.out.println("Digite o nome de usuario");
-                    username = input.nextLine();
+                    System.out.println("Email: ");
+                    email = input.nextLine();
+                    System.out.println("Senha: ");
+                    password = input.nextLine();
+                    
+                    User u = buscarEmail(users, email);
+                    if(u == null)
+                    	System.out.println("Usuario nao encontrado\n");
+                    else {
+                    	if(u.verify(password)) {
+                    		
+                    	}
+                    	else {
+                    		System.out.println("A senha esta incorreta\n");
+                    	}
+                    }
                     
                     break;
 
                 case 2:
-                    String name, password, type;
-                    System.out.println("Digite o nome do usuario");
+                 
+                    int type;
+                    
+                    System.out.println("\nDigite o seu nome completo: ");
                     name = input.nextLine();
 
-                    System.out.println("Digite um nome de usuario");
-                    username = input.nextLine();
-                    System.out.println("Nome de usuario: " + username);
-                    /*if(users.stream().anyMatch(i -> i.username == username)){
-                        System.out.println("username invalido");
-                    }*/
+                    System.out.println("\nDigite o seu email: ");
+                    email = input.nextLine();
+                    
                 
-                    System.out.println("Digite uma senha:");
+                    System.out.println("\nDigite uma senha:");
                     password = input.nextLine();
 
-                    System.out.println("Digite o tipo de usuario: ");
-                    type = input.nextLine();
+                    System.out.println("\nDigite o tipo de usuario: \n");
+                    System.out.println("1 - Aluno");
+                    System.out.println("2 - Professor");
+                    System.out.println("3 - Pesquisador");
+                    System.out.println("4 - Profisional");
+                    System.out.println("5 - Tecnico");
+                    
+                    type = input.nextInt();
+                    System.out.println("================================================\n");
 
-                    users.add(new User(name, type, username, password));
+                    users.add(new User(type, name, email, password));
+                    System.out.println("Usuario cadastrado\n");
                     break;
 
                 default:
                     break;
             }
         }
-        
-
-        
-
+    }
+    public static User buscarEmail(ArrayList<User> users, String email) {
+    	
+    	for(User user: users) {
+    		if(user.getEmail() == email)
+    			return user;
+    	}
+    	return null;
     }
 }

@@ -1,16 +1,37 @@
 import java.util.Scanner;
 
 public class User {
-    String type;
+    int type;
     String name;
     private String password;
-    String username;
+    String email;
     
-    User(String type, String name, String username, String password){
+    User(int type, String name, String email, String password){
         this.type = type;
         this.name = name;
-        this.username = username;
+        this.email = email;
         
         this.password = password;
     }
+    public boolean equals(Object obj) {
+    	if(obj instanceof User) {
+    		User user = (User)obj;
+    		if(user.email == this.email) {
+    			return true;
+    		}
+    	}
+		return false;
+    	
+    }
+    
+    boolean verify( String password) {
+    	if(this.password == password)
+    		return true;
+    	return false;
+    }
+    
+    String getEmail() {
+    	return this.email;
+    }
+    
 }
