@@ -83,9 +83,11 @@ public class Main {
     }
     public static User buscarEmail(ArrayList<User> users, String email) {
     	
-    	for(User user: users) {
-    		if(user.getEmail() == email)
+    	for(User user: users) {	
+    		if(email.equals(user.getEmail())) {
+    			System.out.println("ahhhhh");
     			return user;
+    		}
     	}
     	return null;
     }

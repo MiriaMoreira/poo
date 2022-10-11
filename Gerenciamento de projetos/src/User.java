@@ -25,7 +25,7 @@ public class User {
     }
     
     boolean verify( String password) {
-    	if(this.password == password)
+    	if(password.equals(this.password))
     		return true;
     	return false;
     }
