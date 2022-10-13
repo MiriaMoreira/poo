@@ -23,6 +23,22 @@ public class User {
 		return false;
     	
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
     
     boolean verify( String password) {
     	if(password.equals(this.password))
