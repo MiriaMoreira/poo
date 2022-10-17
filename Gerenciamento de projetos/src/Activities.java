@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Date;
+
 public class Activities {
     
     public int IDA;
@@ -7,5 +10,6 @@ public class Activities {
     String responsible;
     ArrayList<String> p_involved = new ArrayList<String>();
     ArrayList<String> task = new ArrayList<String>();
+
 
 }

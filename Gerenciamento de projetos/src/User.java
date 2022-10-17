@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User {
@@ -5,6 +6,7 @@ public class User {
     String name;
     private String password;
     String email;
+    ArrayList<Project> projects = new ArrayList<>();
     
     User(int type, String name, String email, String password){
         this.type = type;

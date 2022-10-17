@@ -13,6 +13,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         int n = 4;
         ArrayList<User> users = new ArrayList<>();
+        ArrayList<Project> projects = new ArrayList<>();
 
         while(n != 0){
             System.out.println("Escolha uma opcao");
@@ -40,7 +41,7 @@ public class Main {
                     	System.out.println("Usuario nao encontrado\n");
                     else {
                     	if(u.verify(password)) {
-                    		login(u);
+                    		login(u, projects);
                     	}
                     	else {
                     		System.out.println("A senha esta incorreta\n");
@@ -91,7 +92,7 @@ public class Main {
     	return null;
     }
 
-    public static void login(User user){
+    public static void login(User user, ArrayList<Project> projects){
        
         int value = -1;
 
@@ -154,6 +155,24 @@ public class Main {
                     break;
 
                 case 2:
+                    System.out.println("Selecione um projeto para vizualizar/alterar ou crie um novo projeto:");
+                    int i = 1;
+                    if(user.type == 2 || user.type == 3){
+                        System.out.println("1 - Criar Projeto");
+                        i++;
+                    }
+                    if(user.projects.isEmpty()){
+                        
+                        System.out.println("Voce ainda nao possui nenhum projeto");
+
+                    } else{
+
+                        for(Project project : user.projects){
+                            System.out.println(i + " - " + project);
+                            i++;
+                        }
+
+                    }
                     break;
 
                 case 3:
