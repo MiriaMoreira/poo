@@ -92,6 +92,10 @@ public class Main {
     	return null;
     }
 
+    public static void open_project(Project project){
+
+    }
+
     public static void login(User user, ArrayList<Project> projects){
        
         int value = -1;
@@ -156,7 +160,7 @@ public class Main {
 
                 case 2:
                     System.out.println("Selecione um projeto para vizualizar/alterar ou crie um novo projeto:");
-                    int i = 1;
+                    int i = 1, a = 0;
                     if(user.type == 2 || user.type == 3){
                         System.out.println("1 - Criar Projeto");
                         i++;
@@ -170,7 +174,11 @@ public class Main {
                         for(Project project : user.projects){
                             System.out.println(i + " - " + project);
                             i++;
+                            a++;
                         }
+                        int valor = input.nextInt();
+                        open_project(user.projects.get(i));
+
 
                     }
                     break;
