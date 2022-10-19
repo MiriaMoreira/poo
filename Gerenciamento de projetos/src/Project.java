@@ -10,6 +10,7 @@ public class Project {
     Date ini_date;
     Date end_date;
     String coordinator;
+    Status status;
     ArrayList<String> p_involved = new ArrayList<String>();
 
 
