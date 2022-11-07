@@ -1,8 +1,9 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -99,7 +100,7 @@ public class Main {
 
     }
 
-    public static void create_project(User user){
+    public static void create_project(ArrayList<Project> projects){
         Scanner input = new Scanner(System.in);
 
         System.out.println("Digite o titulo do projeto");
@@ -109,8 +110,8 @@ public class Main {
         String description = input.nextLine();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date ini_date = new Date();
-        Date end_date = new Date();
+        Date begin = new Date();
+        Date end = new Date();
 
         boolean done = false;
 
@@ -121,8 +122,8 @@ public class Main {
             String e_date = input.nextLine();
 
             try{
-                ini_date = sdf.parse(i_date);
-                end_date = sdf.parse(e_date);
+                begin = sdf.parse(i_date);
+                end = sdf.parse(e_date);
                 done = true;
             } catch (ParseException e){
                 System.out.println("Formato de entrada invalido, digite seguindo o formato: dd/mm/aaaa");
@@ -130,7 +131,7 @@ public class Main {
         }
 
         System.out.println("Digite o do coordenador do projeto");
-        String c_name = input.nextLine();
+        String coordinator = input.nextLine();
         
         ArrayList<String> p_involved = new ArrayList<>();
         System.out.println("Digite os nomes dos participantes do projeto, digite \"fim\" quando terminar");
@@ -138,56 +139,59 @@ public class Main {
 
         while(!"fim".equals(e_name)){
             p_involved.add(e_name);
-            e_name = input.nextLine();
-            
+            e_name = input.nextLine();  
         }
-        
 
-
+        projects.add(new Project(projects.size()+1, title, description, begin, end, coordinator, p_involved));
     }
 
-    public static void user_changes(User user){
+    public static void change_user_data(User user){
 
         System.out.println("O que gostaria de alterar?");
-                    System.out.println("1 - Alterar nome");
-                    System.out.println("2 - Alterar email");
-                    System.out.println("3 - Alterar senha");
-                    System.out.println("4 - Alterar Tipo");
+            System.out.println("1 - Alterar nome");
+            System.out.println("2 - Alterar email");
+            System.out.println("3 - Alterar senha");
+            System.out.println("4 - Alterar Tipo");
 
-                    Scanner input = new Scanner(System.in);
-                    int option = input.nextInt();
-                    input.nextLine();
+            Scanner input = new Scanner(System.in);
 
-                    switch(option){
-                        case 1:
-                            System.out.println("Digite o novo nome:");
-                            String name = input.nextLine();
-                            user.setName(name);
-                            break;
-                        case 2:
-                            System.out.println("Digite o novo email:");
-                            String email = input.nextLine();
-                            user.setEmail(email);
-                            break;
-                        case 3:
-                            System.out.println("Digite a nova senha:");
-                            String password = input.nextLine();
-                            user.setPassword(password);
-                            break;
-                        case 4:
-                            System.out.println("\nDigite o tipo de usuario: \n");
-                            System.out.println("1 - Aluno");
-                            System.out.println("2 - Professor");
-                            System.out.println("3 - Pesquisador");
-                            System.out.println("4 - Profisional");
-                            System.out.println("5 - Tecnico");
+            int option = input.nextInt();
+            input.nextLine();
 
-                            int type = input.nextInt();
-                            user.setType(type);
-                            break;
-                        default:
-                            break;
-                    }
+            switch(option){
+
+                case 0:
+                    break;
+                case 1:
+                    System.out.println("Digite o novo nome:");
+                    String name = input.nextLine();
+                    user.setName(name);
+                    break;
+                case 2:
+                    System.out.println("Digite oo novo email:");
+                    String email = input.nextLine();
+                    user.setEmail(email);
+                    break;
+                case 3:
+                    System.out.println("Digite a nova senha:");
+                    String password = input.nextLine();
+                    user.setPassword(password);
+                    break;
+                case 4:
+                    System.out.println("\nDigite o tipo de usuario: \n");
+                    System.out.println("1 - Aluno");
+                    System.out.println("2 - Professor");
+                    System.out.println("3 - Pesquisador");
+                    System.out.println("4 - Profisional");
+                    System.out.println("5 - Tecnico");
+
+                    int type = input.nextInt();
+                    user.setType(type);
+                    break;
+                default:
+                    System.out.println("Opcao invalida");
+                    break;
+            }
     }
 
     public static void login(User user, ArrayList<Project> projects){
@@ -204,7 +208,8 @@ public class Main {
             System.out.println("1 - Alterar Dados do usuario");
             System.out.println("2 - Criar Projeto");
             System.out.println("3 - Editar Projeto");
-            System.out.println("4 - Consultar");
+            System.out.println("4 - Vizualizar Projetos");
+            System.out.println("5 - Consultar");
             System.out.println("================================================\n");
             
             value = input.nextInt();
@@ -212,19 +217,39 @@ public class Main {
             switch(value){
 
                 case 1:
-                    user_changes(user);
+                    change_user_data(user);
                     break;
 
                 case 2:
-                    create_project(user);
+                    create_project(projects);
                     break;
 
                 case 3:
+                    if(user.projects.isEmpty()){
+                                
+                        System.out.println("Voce ainda nao possui nenhum projeto");
+
+                    } else{
+                        int i = 0;
+                        System.out.println("Selecione o projeto que gostaria de editar:");
+                        for(Project project : user.projects){
+                            System.out.println(i + " - " + project);
+                            i++;
+                        }
+                        int valor = input.nextInt();
+                        open_project(user.projects.get(valor));
+                    }
+                            
                     break;
 
                 default:
                     break;
-            }
+
+                    }
+                    
+
+                    
+                    break;
         }
     }
 
