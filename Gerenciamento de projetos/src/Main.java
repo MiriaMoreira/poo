@@ -45,7 +45,7 @@ public class Main {
                     	System.out.println("Usuario nao encontrado\n");
                     else {
                     	if(u.verify(password)) {
-                    		login(u, projects);
+                    		login(u, projects, users);
                     	}
                     	else {
                     		System.out.println("A senha esta incorreta\n");
@@ -95,12 +95,21 @@ public class Main {
     	}
     	return null;
     }
+    
+    public static User buscarNome(ArrayList<User> users, String name) {
+    	
+    	for(User user: users) {
+    		if(name.equals(user.getName()))
+    			return user;
+    	}
+    	return null;
+    }
 
     public static void open_project(Project project){
 
     }
 
-    public static void create_project(ArrayList<Project> projects){
+    public static void create_project(ArrayList<Project> projects, ArrayList<User> users){
         Scanner input = new Scanner(System.in);
 
         System.out.println("Digite o titulo do projeto");
@@ -108,8 +117,53 @@ public class Main {
 
         System.out.println("Digite a descricao do projeto");
         String description = input.nextLine();
+        
+        System.out.println("Duração do projeto:");
+        Period project_period = setPeriod();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println("Digite o do coordenador do projeto");
+        String coordinator = input.nextLine();
+        
+        ArrayList<String> p_involved = new ArrayList<>();
+        System.out.println("Digite os nomes dos profissionais envolvidos no projeto, digite \"fim\" quando terminar");
+        String e_name = input.nextLine();
+
+        while(!"fim".equals(e_name)){
+        	
+            User user = buscarNome(users, e_name);
+            
+            if(user == null) {
+            	System.out.println("Usuario nao encontrado");
+            }
+            else {
+            	
+            	p_involved.add(e_name);
+            	System.out.println("Digite o valor da bolsa para " + e_name + ":");
+                
+                int value = input.nextInt();
+                
+                System.out.println("Periodo de vigencia da bolsa:");
+                
+                Period period = setPeriod();
+                
+                Bolsa bolsa = new Bolsa(value, period);
+                
+                user.setBolsa(bolsa);
+                e_name = input.nextLine();
+            }
+        }
+        
+        
+        
+        
+        
+        projects.add(new Project(projects.size()+1, title, description, project_period, coordinator, p_involved));
+    }
+    
+    public static Period setPeriod() {
+    	
+    	Scanner input = new Scanner(System.in);
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date begin = new Date();
         Date end = new Date();
 
@@ -129,20 +183,9 @@ public class Main {
                 System.out.println("Formato de entrada invalido, digite seguindo o formato: dd/mm/aaaa");
             }
         }
-
-        System.out.println("Digite o do coordenador do projeto");
-        String coordinator = input.nextLine();
         
-        ArrayList<String> p_involved = new ArrayList<>();
-        System.out.println("Digite os nomes dos participantes do projeto, digite \"fim\" quando terminar");
-        String e_name = input.nextLine();
-
-        while(!"fim".equals(e_name)){
-            p_involved.add(e_name);
-            e_name = input.nextLine();  
-        }
-
-        projects.add(new Project(projects.size()+1, title, description, begin, end, coordinator, p_involved));
+        Period new_period = new Period(begin, end);
+    	return new_period;
     }
 
     public static void change_user_data(User user){
@@ -168,7 +211,7 @@ public class Main {
                     user.setName(name);
                     break;
                 case 2:
-                    System.out.println("Digite oo novo email:");
+                    System.out.println("Digite o novo email:");
                     String email = input.nextLine();
                     user.setEmail(email);
                     break;
@@ -194,7 +237,7 @@ public class Main {
             }
     }
 
-    public static void login(User user, ArrayList<Project> projects){
+    public static void login(User user, ArrayList<Project> projects, ArrayList<User> users){
        
         int value = -1;
 
@@ -221,7 +264,7 @@ public class Main {
                     break;
 
                 case 2:
-                    create_project(projects);
+                    create_project(projects, users);
                     break;
 
                 case 3:

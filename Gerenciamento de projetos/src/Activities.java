@@ -5,11 +5,15 @@ public class Activities {
     
     public int IDA;
     public String description;
-    Date ini_date;
-    Date end_date;
+    Period activity_period;
     String responsible;
-    ArrayList<String> p_involved = new ArrayList<String>();
-    ArrayList<String> task = new ArrayList<String>();
+    ArrayList<Task> tasks;
 
-
+    Activities(int ida, String description, Period activity_period, String responsible, ArrayList<Task> tasks){
+    	this.IDA = ida;
+    	this.description = description;
+    	this.activity_period = activity_period;
+    	this.responsible = responsible;
+    	this.tasks = tasks;
+    }
 }

@@ -8,6 +8,7 @@ public class User {
     private String password;
     String email;
     ArrayList<Project> projects = new ArrayList<>();
+    Bolsa bolsa;
     
     User(int type, String name, String email, String password){
         this.type = type;
@@ -16,6 +17,11 @@ public class User {
         
         this.password = password;
     }
+    
+    public void setBolsa(Bolsa bolsa){
+    	this.bolsa = bolsa;
+    }
+    
     public boolean equals(Object obj) {
     	if(obj instanceof User) {
     		User user = (User)obj;
@@ -51,6 +57,10 @@ public class User {
     
     String getEmail() {
     	return this.email;
+    }
+    
+    String getName() {
+    	return this.name;
     }
     
 }
