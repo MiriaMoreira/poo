@@ -110,22 +110,23 @@ public class Main {
     }
 
     public static void create_project(ArrayList<Project> projects, ArrayList<User> users){
+
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Digite o titulo do projeto");
+        System.out.println("\nDigite o titulo do projeto: ");
         String title = input.nextLine();
 
-        System.out.println("Digite a descricao do projeto");
+        System.out.println("\nDigite a descricao do projeto: ");
         String description = input.nextLine();
         
-        System.out.println("Duração do projeto:");
+        System.out.println("\nDuração do projeto:");
         Period project_period = setPeriod();
 
-        System.out.println("Digite o do coordenador do projeto");
+        System.out.println("\nDigite o do coordenador do projeto");
         String coordinator = input.nextLine();
         
         ArrayList<String> p_involved = new ArrayList<>();
-        System.out.println("Digite os nomes dos profissionais envolvidos no projeto, digite \"fim\" quando terminar");
+        System.out.println("\nDigite os nomes dos profissionais envolvidos no projeto, digite \"fim\" quando terminar");
         String e_name = input.nextLine();
 
         while(!"fim".equals(e_name)){
@@ -138,19 +139,22 @@ public class Main {
             else {
             	
             	p_involved.add(e_name);
-            	System.out.println("Digite o valor da bolsa para " + e_name + ":");
+            	System.out.println("\nDigite o valor da bolsa para " + e_name + ":");
                 
                 int value = input.nextInt();
+
+                input.nextLine();
                 
-                System.out.println("Periodo de vigencia da bolsa:");
+                System.out.println("\nPeriodo de vigencia da bolsa:");
                 
                 Period period = setPeriod();
                 
                 Bolsa bolsa = new Bolsa(value, period);
                 
                 user.setBolsa(bolsa);
-                e_name = input.nextLine();
+                
             }
+            e_name = input.nextLine();
         }
         
         
@@ -289,10 +293,6 @@ public class Main {
                     break;
 
                     }
-                    
-
-                    
-                    break;
         }
     }
 
