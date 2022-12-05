@@ -125,7 +125,7 @@ public class Main {
         System.out.println("\nDigite o do coordenador do projeto");
         String coordinator = input.nextLine();
         
-        ArrayList<String> p_involved = new ArrayList<>();
+        ArrayList<String> p_involved = new ArrayList<String>();
         System.out.println("\nDigite os nomes dos profissionais envolvidos no projeto, digite \"fim\" quando terminar");
         String e_name = input.nextLine();
 
@@ -157,11 +157,52 @@ public class Main {
             e_name = input.nextLine();
         }
         
+        boolean done = false;
         
+        ArrayList<Activities> activities = new ArrayList<Activities>();
         
-        
-        
+        while(!done) {
+        	System.out.println("0 - concluir criacao do projeto");
+        	System.out.println("1 - Adicionar Atividade");
+        	
+        	int value = input.nextInt();
+        	
+        	if(value == 1)
+        		activities.add(create_activity(activities));
+        }
         projects.add(new Project(projects.size()+1, title, description, project_period, coordinator, p_involved));
+        projects.get(projects.size()-1).setStatus();
+        
+        System.out.println("Projeto adicionado");
+        System.out.println("Status do projeto: " + projects.get(projects.size()-1).getStatus());
+        
+    }
+    
+        
+    
+    public static Activities create_activity(ArrayList<Activities> activities) {
+    	
+    	Scanner input = new Scanner(System.in);
+    	
+    	System.out.println("Digite a descricao da atividade ");
+    	String description = input.nextLine();
+    	
+    	Period period = setPeriod();
+    	
+    	System.out.println("Digite o nome do responsavel pela atividade ");
+    	String responsible = input.nextLine();
+    	
+    	String name = input.nextLine();
+    	String task;
+    	
+    	while("fim".equals(name)) {
+    		System.out.println("Digite")
+    	}
+    	
+    	activities activity;
+    	
+    	return activity;
+    	
     }
     
     public static Period setPeriod() {

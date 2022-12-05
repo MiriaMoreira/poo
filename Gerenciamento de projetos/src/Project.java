@@ -27,6 +27,10 @@ public class Project {
     
     }
 
+    public void setStatus() {
+    	this.status = "Em processo de criacao";
+    }
+    
     public void nextStatus(String status){
         switch(status){
             case "Em processo de criacao":
@@ -37,11 +41,15 @@ public class Project {
                 this.status = "Em andamento";
                 break;
             case "Em andamento":
-                this.status = "Concuido";
+                this.status = "Concluido";
                 break;
             default:
                 this.status = "Em processo de criacao";
                 break;
         }
+    }
+    
+    public String getStatus() {
+    	return this.status;
     }
 }
