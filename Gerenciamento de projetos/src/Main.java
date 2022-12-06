@@ -169,6 +169,8 @@ public class Main {
         	
         	if(value == 1)
         		activities.add(create_activity(activities));
+        	else
+        		done = true;
         }
         projects.add(new Project(projects.size()+1, title, description, project_period, coordinator, p_involved));
         projects.get(projects.size()-1).setStatus();
@@ -192,14 +194,28 @@ public class Main {
     	System.out.println("Digite o nome do responsavel pela atividade ");
     	String responsible = input.nextLine();
     	
-    	String name = input.nextLine();
+    	System.out.println("Digite os nomes pds profissionais envolvidos na atividade e a tarefa a ser executada por ele:");
+    	System.out.println("**Digite \"fim\" quando terminar");
+    	System.out.println("================================================\n");
+    	String name = " ";
     	String task;
+    	ArrayList<Task> tasks = new ArrayList<Task>();
     	
-    	while("fim".equals(name)) {
-    		System.out.println("Digite")
+    	
+    	while(!"fim".equals(name)) {
+    		System.out.println("Nome do profissional: (ou fim, caso nao haja mais profissionais envolvidos na atividade)");
+    		name = input.nextLine();
+    		
+    		if("fim".equals(name))
+    			break;
+    		
+    		System.out.println("Digite a tarefa a ser executada por esse profissional: \n");
+    		task = input.nextLine();
+    		
+    		tasks.add(new Task(name, task));
     	}
     	
-    	activities activity;
+    	Activities activity = new Activities(activities.size()+1, description, period, responsible, tasks);
     	
     	return activity;
     	
@@ -296,8 +312,7 @@ public class Main {
             System.out.println("1 - Alterar Dados do usuario");
             System.out.println("2 - Criar Projeto");
             System.out.println("3 - Editar Projeto");
-            System.out.println("4 - Vizualizar Projetos");
-            System.out.println("5 - Consultar");
+            System.out.println("4 - Consultar");
             System.out.println("================================================\n");
             
             value = input.nextInt();
@@ -329,6 +344,8 @@ public class Main {
                     }
                             
                     break;
+                case 4:
+                	break;
 
                 default:
                     break;

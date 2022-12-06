@@ -2,14 +2,13 @@ import java.util.ArrayList;
 
 public class Task {
 	String name;
-	ArrayList<String> tasks;
+	String task;
 	
-	public void setName(String name) {
+	Task(String name, String task){
+		
 		this.name = name;
-	}
-	
-	public void setTasks(ArrayList<String> tasks) {
-		this.tasks = tasks;
+		this.task = task;
+		
 	}
 }
 
