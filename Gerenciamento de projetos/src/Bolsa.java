@@ -1,9 +1,9 @@
 
 public class Bolsa {
-	int value;
+	double value;
     Period period;
     
-    Bolsa(int value, Period period){
+    Bolsa(double value, Period period){
     	this.value = value;
     	this.period = period;
     }

@@ -3,15 +3,15 @@ import java.util.Scanner;
 import java.util.Date;
 
 public class User {
-    int type;
+    
     String name;
     private String password;
     String email;
     ArrayList<Project> projects = new ArrayList<>();
     Bolsa bolsa;
     
-    User(int type, String name, String email, String password){
-        this.type = type;
+    User(String name, String email, String password){
+        
         this.name = name;
         this.email = email;
         
@@ -43,10 +43,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setType(int type) {
-        this.type = type;
     }
     
     boolean verify( String password) {

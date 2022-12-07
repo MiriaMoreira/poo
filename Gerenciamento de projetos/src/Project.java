@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 
 public class Project {
@@ -14,7 +16,7 @@ public class Project {
     ArrayList<Activities> activities;
     
 
-    Project(int idp, String title, String description, Period project_period, 
+    public void setParameters(int idp, String title, String description, Period project_period, 
     		String coordinator, ArrayList<String> p_involved){
 
         this.idp = idp;
@@ -51,5 +53,31 @@ public class Project {
     
     public String getStatus() {
     	return this.status;
+    }
+
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public void setPeriod(Period period){
+        this.project_period = period;
+    }
+
+    public void setCoordinator(String coordinator){
+        this.coordinator = coordinator;
+    }
+
+    @Override
+    public String toString(){
+        return "Titulo " + this.title + "\n" + 
+                "Descricao: " + this.description + "\n" +
+                "Status: " + this.status + "\n" +
+                "Data de inicio: " + this.project_period.toString_begin(this.project_period) + "\n" +
+                "Data de termino: " + this.project_period.toString_end(this.project_period) + "\n" +
+                "Coordenador do projeto: " + this.coordinator + "\n";
     }
 }

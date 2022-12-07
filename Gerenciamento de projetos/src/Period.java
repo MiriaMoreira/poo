@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Period {
 	Date begin;
@@ -9,5 +11,13 @@ public class Period {
 		this.end = end;
 	}
 	
-	
+	public String toString_begin(Period period){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(period.begin);
+	}
+
+	public String toString_end(Period period){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(period.end);
+	}
 }

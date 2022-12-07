@@ -26,7 +26,19 @@ public class Main {
             System.out.println("2 - Criar Conta");
             System.out.println("================================================\n");
 
-            n = input.nextInt();
+            n = 0;
+            boolean correctInput = false;
+
+            while(!correctInput){
+                try{
+                    n = Integer.parseInt(input.next());
+                    correctInput = true;
+                } catch (NumberFormatException e){
+                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+                }
+            }
+            
+            correctInput = false;
             input.nextLine();
 
 
@@ -75,11 +87,63 @@ public class Main {
                     System.out.println("4 - Profisional");
                     System.out.println("5 - Tecnico");
                     
-                    type = input.nextInt();
+                    
+
+                    boolean done = false;
+
+                    while(!done){
+
+                        type = 0;
+                        correctInput = false;
+    
+                        while(!correctInput){
+                            try{
+                                type = Integer.parseInt(input.next());
+                                correctInput = true;
+                            } catch (NumberFormatException e){
+                                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+                            }
+                        }
+
+                        switch(type){
+
+                            case 1:
+                                users.add(new Aluno(name, email, password));
+                                System.out.println("Usuario cadastrado\n");
+                                done = true;
+                                break;
+
+                            case 2:
+                                users.add(new Professor(name, email, password));
+                                System.out.println("Usuario cadastrado\n");
+                                done = true;
+                                break;
+                            
+                            case 3:
+                                users.add(new Pesquisador(name, email, password));
+                                System.out.println("Usuario cadastrado\n");
+                                done = true;
+                                break;
+
+                            case 4:
+                                users.add(new Profissional(name, email, password));
+                                System.out.println("Usuario cadastrado\n");
+                                done = true;
+                                break;
+                            
+                            case 5:
+                                users.add(new Tecnico(name, email, password));
+                                System.out.println("Usuario cadastrado\n");
+                                done = true;
+                                break;
+
+                            default:
+                                System.out.println("Entrada invalida");
+                        }
+                    }
                     System.out.println("================================================\n");
 
-                    users.add(new User(type, name, email, password));
-                    System.out.println("Usuario cadastrado\n");
+                    
                     break;
 
                 default:
@@ -106,12 +170,77 @@ public class Main {
     }
 
     public static void open_project(Project project){
+        
+        System.out.println("O que gostaria de alterar no projeto?\n"
+                            + "1 - Alterar titulo do projeto\n"
+                            + "2 - Alterar descricao do projeto\n"
+                            + "3 - Alterar status do projeto\n"
+                            + "4 - Alterar periodo de duracao do projeto\n"
+                            + "5 - Alterar coordenador do projeto\n"
+                            + "6 - Adicionar Atividade\n");
+
+
+        Scanner input = new Scanner(System.in);
+        boolean correctInput = false;
+        int option = 0;
+
+        while(!correctInput){
+            try{
+                option = Integer.parseInt(input.next());
+                correctInput = true;
+            } catch (NumberFormatException e){
+                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+            }
+        }
+        
+        correctInput = false;
+        input.nextLine();
+
+        switch(option){
+            case 1:
+                System.out.println("Digite o novo titulo do projeto: ");
+                String title = input.nextLine();
+                project.setTitle(title);
+                break;
+            
+            case 2:
+                System.out.println("Digite a nova descricao do projeto: ");
+                String description = input.nextLine();
+                project.setDescription(description);
+                break;
+
+            case 3:
+                System.out.println("O status atual do projeto e: " + project.getStatus());
+                project.nextStatus(project.getStatus());
+                System.out.println("o novo status do projeto e: " + project.getStatus());
+                break;
+            
+            case 4:
+                Period period = setPeriod();
+                project.setPeriod(period);
+                break;
+
+            case 5:
+                System.out.println("Digite o nome do novo coordenador do projeto: ");
+                String coordinator = input.nextLine();
+                project.setCoordinator(coordinator);
+                break;
+
+            case 6:
+                project.activities.add(create_activity(project.activities));
+                break;
+
+            default:
+                break;
+
+        }
 
     }
 
     public static void create_project(ArrayList<Project> projects, ArrayList<User> users){
 
         Scanner input = new Scanner(System.in);
+        Project project = new Project();
 
         System.out.println("\nDigite o titulo do projeto: ");
         String title = input.nextLine();
@@ -122,8 +251,30 @@ public class Main {
         System.out.println("\nDuração do projeto:");
         Period project_period = setPeriod();
 
-        System.out.println("\nDigite o do coordenador do projeto");
-        String coordinator = input.nextLine();
+        System.out.println("\n*O coordenador do projeto precisar ser pesquisador ou professor");
+
+        User user = null;
+        boolean done = false;
+        String coordinator = " ";
+        
+        while(!done){
+
+            System.out.println("Digite o nome do coordenador do projeto: ");
+            coordinator = input.nextLine();
+            user = buscarNome(users, coordinator);
+
+            if(user == null)
+                System.out.println("usuario nao encontrado");
+            else{
+                if(user instanceof Pesquisador || user instanceof Professor){
+                    System.out.println("Coordenador valido");
+                    user.projects.add(project);
+                    done = true;
+                } else {
+                    System.out.println("Coordenador invalido");
+                }
+            }
+        }
         
         ArrayList<String> p_involved = new ArrayList<String>();
         System.out.println("\nDigite os nomes dos profissionais envolvidos no projeto, digite \"fim\" quando terminar");
@@ -131,7 +282,7 @@ public class Main {
 
         while(!"fim".equals(e_name)){
         	
-            User user = buscarNome(users, e_name);
+            user = buscarNome(users, e_name);
             
             if(user == null) {
             	System.out.println("Usuario nao encontrado");
@@ -139,9 +290,10 @@ public class Main {
             else {
             	
             	p_involved.add(e_name);
+                user.projects.add(project);
             	System.out.println("\nDigite o valor da bolsa para " + e_name + ":");
                 
-                int value = input.nextInt();
+                double value = input.nextInt();
 
                 input.nextLine();
                 
@@ -157,7 +309,7 @@ public class Main {
             e_name = input.nextLine();
         }
         
-        boolean done = false;
+        done = false;
         
         ArrayList<Activities> activities = new ArrayList<Activities>();
         
@@ -172,7 +324,9 @@ public class Main {
         	else
         		done = true;
         }
-        projects.add(new Project(projects.size()+1, title, description, project_period, coordinator, p_involved));
+
+        project.setParameters(projects.size()+1, title, description, project_period, coordinator, p_involved);
+        projects.add(project);
         projects.get(projects.size()-1).setStatus();
         
         System.out.println("Projeto adicionado");
@@ -255,11 +409,21 @@ public class Main {
             System.out.println("1 - Alterar nome");
             System.out.println("2 - Alterar email");
             System.out.println("3 - Alterar senha");
-            System.out.println("4 - Alterar Tipo");
 
             Scanner input = new Scanner(System.in);
+            boolean correctInput = false;
+            int option = 0;
 
-            int option = input.nextInt();
+            while(!correctInput){
+                try{
+                    option = Integer.parseInt(input.next());
+                    correctInput = true;
+                } catch (NumberFormatException e){
+                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+                }
+            }
+            
+            correctInput = false;
             input.nextLine();
 
             switch(option){
@@ -267,36 +431,33 @@ public class Main {
                 case 0:
                     break;
                 case 1:
+
                     System.out.println("Digite o novo nome:");
                     String name = input.nextLine();
                     user.setName(name);
                     break;
+
                 case 2:
+
                     System.out.println("Digite o novo email:");
                     String email = input.nextLine();
                     user.setEmail(email);
                     break;
                 case 3:
+
                     System.out.println("Digite a nova senha:");
                     String password = input.nextLine();
                     user.setPassword(password);
-                    break;
-                case 4:
-                    System.out.println("\nDigite o tipo de usuario: \n");
-                    System.out.println("1 - Aluno");
-                    System.out.println("2 - Professor");
-                    System.out.println("3 - Pesquisador");
-                    System.out.println("4 - Profisional");
-                    System.out.println("5 - Tecnico");
 
-                    int type = input.nextInt();
-                    user.setType(type);
                     break;
+
                 default:
+
                     System.out.println("Opcao invalida");
                     break;
             }
     }
+
 
     public static void login(User user, ArrayList<Project> projects, ArrayList<User> users){
        
@@ -312,10 +473,19 @@ public class Main {
             System.out.println("1 - Alterar Dados do usuario");
             System.out.println("2 - Criar Projeto");
             System.out.println("3 - Editar Projeto");
-            System.out.println("4 - Consultar");
+            System.out.println("4 - Consultar Projetos");
             System.out.println("================================================\n");
             
-            value = input.nextInt();
+            boolean correctInput = false;
+
+            while(!correctInput){
+                try{
+                    value = Integer.parseInt(input.next());
+                    correctInput = true;
+                } catch (NumberFormatException e){
+                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+                }
+            }
 
             switch(value){
 
@@ -336,16 +506,36 @@ public class Main {
                         int i = 0;
                         System.out.println("Selecione o projeto que gostaria de editar:");
                         for(Project project : user.projects){
-                            System.out.println(i + " - " + project);
+                            System.out.println(i + " - " + project.title);
                             i++;
                         }
                         int valor = input.nextInt();
+                        
+                        while(!correctInput){
+                            try{
+                                valor = Integer.parseInt(input.next());
+                                correctInput = true;
+                            } catch (NumberFormatException e){
+                                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+                            }
+                        }
+                        
                         open_project(user.projects.get(valor));
+
                     }
                             
                     break;
+    
                 case 4:
-                	break;
+                    int i = 0;
+                    System.out.println("Selecione o projeto que gostaria de consultar:");
+                    for(Project project : projects){
+                        System.out.println(i + " - " + project.title);
+                        i++;
+                    }
+                    int valor = input.nextInt();
+                    System.out.println(projects.get(valor).toString());
+                    break;
 
                 default:
                     break;
