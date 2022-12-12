@@ -26,22 +26,8 @@ public class Main {
             System.out.println("2 - Criar Conta");
             System.out.println("================================================\n");
 
-            n = 0;
-            boolean correctInput = false;
-
-            while(!correctInput){
-                try{
-                    n = Integer.parseInt(input.next());
-                    correctInput = true;
-                } catch (NumberFormatException e){
-                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                }
-            }
+            n = read_int();
             
-            correctInput = false;
-            input.nextLine();
-
-
             String email, name, password;
 
             switch (n){
@@ -93,17 +79,7 @@ public class Main {
 
                     while(!done){
 
-                        type = 0;
-                        correctInput = false;
-    
-                        while(!correctInput){
-                            try{
-                                type = Integer.parseInt(input.next());
-                                correctInput = true;
-                            } catch (NumberFormatException e){
-                                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                            }
-                        }
+                        type = read_int();
 
                         switch(type){
 
@@ -181,20 +157,7 @@ public class Main {
 
 
         Scanner input = new Scanner(System.in);
-        boolean correctInput = false;
-        int option = 0;
-
-        while(!correctInput){
-            try{
-                option = Integer.parseInt(input.next());
-                correctInput = true;
-            } catch (NumberFormatException e){
-                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-            }
-        }
-        
-        correctInput = false;
-        input.nextLine();
+        int option = read_int();
 
         switch(option){
             case 1:
@@ -317,7 +280,7 @@ public class Main {
         	System.out.println("0 - concluir criacao do projeto");
         	System.out.println("1 - Adicionar Atividade");
         	
-        	int value = input.nextInt();
+        	int value = read_int();
         	
         	if(value == 1)
         		activities.add(create_activity(activities));
@@ -411,19 +374,8 @@ public class Main {
             System.out.println("3 - Alterar senha");
 
             Scanner input = new Scanner(System.in);
-            boolean correctInput = false;
-            int option = 0;
+            int option = read_int();
 
-            while(!correctInput){
-                try{
-                    option = Integer.parseInt(input.next());
-                    correctInput = true;
-                } catch (NumberFormatException e){
-                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                }
-            }
-            
-            correctInput = false;
             input.nextLine();
 
             switch(option){
@@ -458,6 +410,23 @@ public class Main {
             }
     }
 
+    public static int read_int(){
+        Scanner input = new Scanner(System.in);
+        boolean correctInput = false;
+        int number = 0;
+
+        while(!correctInput){
+            try{
+                number = Integer.parseInt(input.next());
+                correctInput = true;
+            } catch (NumberFormatException e){
+                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+            }
+        }
+
+        return number;
+    }
+
 
     public static void login(User user, ArrayList<Project> projects, ArrayList<User> users){
        
@@ -478,14 +447,7 @@ public class Main {
             
             boolean correctInput = false;
 
-            while(!correctInput){
-                try{
-                    value = Integer.parseInt(input.next());
-                    correctInput = true;
-                } catch (NumberFormatException e){
-                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                }
-            }
+            value = read_int();
 
             switch(value){
 
@@ -509,16 +471,7 @@ public class Main {
                             System.out.println(i + " - " + project.title);
                             i++;
                         }
-                        int valor = input.nextInt();
-                        
-                        while(!correctInput){
-                            try{
-                                valor = Integer.parseInt(input.next());
-                                correctInput = true;
-                            } catch (NumberFormatException e){
-                                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                            }
-                        }
+                        int valor = read_int();
                         
                         open_project(user.projects.get(valor));
 
@@ -530,10 +483,10 @@ public class Main {
                     int i = 0;
                     System.out.println("Selecione o projeto que gostaria de consultar:");
                     for(Project project : projects){
-                        System.out.println(i + " - " + project.title);
+                        System.out.println(i+1 + " - " + project.title);
                         i++;
                     }
-                    int valor = input.nextInt();
+                    int valor = (read_int() - 1);
                     System.out.println(projects.get(valor).toString());
                     break;
 
