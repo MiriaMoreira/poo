@@ -25,6 +25,17 @@ public class Main {
             System.out.println("1 - Fazer Login");
             System.out.println("2 - Criar Conta");
             System.out.println("================================================\n");
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd");
+            Date date = new Date();
+            String f_date = sdf.format(date);
+            int day = Integer.parseInt(f_date);
+
+            if(day == 8){
+                for(Project project: projects){
+                    project.Payment();
+                }
+            }
 
             n = read_int();
             
@@ -256,10 +267,8 @@ public class Main {
                 user.projects.add(project);
             	System.out.println("\nDigite o valor da bolsa para " + e_name + ":");
                 
-                double value = input.nextInt();
+                double value = read_double();
 
-                input.nextLine();
-                
                 System.out.println("\nPeriodo de vigencia da bolsa:");
                 
                 Period period = setPeriod();
@@ -277,7 +286,7 @@ public class Main {
         ArrayList<Activities> activities = new ArrayList<Activities>();
         
         while(!done) {
-        	System.out.println("0 - concluir criacao do projeto");
+        	System.out.println("\n0 - concluir criacao do projeto");
         	System.out.println("1 - Adicionar Atividade");
         	
         	int value = read_int();
@@ -297,7 +306,7 @@ public class Main {
         
     }
     
-        
+
     
     public static Activities create_activity(ArrayList<Activities> activities) {
     	
@@ -427,6 +436,24 @@ public class Main {
         return number;
     }
 
+    public static double read_double(){
+        Scanner input = new Scanner(System.in);
+        boolean correctInput = false;
+        double number = 0;
+
+        while(!correctInput){
+            try{
+                number = Double.parseDouble(input.next());
+                correctInput = true;
+            } catch (NumberFormatException e){
+                System.out.println("Entrada Invalida, digite um numero inteiro, usando ponto para representar as casas decimais " 
+                + e.getMessage());
+            }
+        }
+
+        return number;
+    }
+
 
     public static void login(User user, ArrayList<Project> projects, ArrayList<User> users){
        
@@ -443,6 +470,8 @@ public class Main {
             System.out.println("2 - Criar Projeto");
             System.out.println("3 - Editar Projeto");
             System.out.println("4 - Consultar Projetos");
+            System.out.println("5 - Gerar Relatorio");
+            System.out.println("6 - Fazer intecâmbio entre projetos");
             System.out.println("================================================\n");
             
             boolean correctInput = false;
@@ -468,10 +497,10 @@ public class Main {
                         int i = 0;
                         System.out.println("Selecione o projeto que gostaria de editar:");
                         for(Project project : user.projects){
-                            System.out.println(i + " - " + project.title);
+                            System.out.println(i+1 + " - " + project.title);
                             i++;
                         }
-                        int valor = read_int();
+                        int valor = (read_int() - 1);
                         
                         open_project(user.projects.get(valor));
 
@@ -490,6 +519,30 @@ public class Main {
                     System.out.println(projects.get(valor).toString());
                     break;
 
+                case 5:
+                    int a = 0;
+                    System.out.println("Selecione o projeto que gostaria de gerar o relatorio:");
+                    for(Project project : projects){
+                        System.out.println(a+1 + " - " + project.title);
+                        a++;
+                    }
+                    int v = (read_int() - 1);
+                    System.out.println("================================================\n");
+                    System.out.println("Relatorio do projeto\n");
+                    System.out.println("================================================\n");
+                    System.out.println(projects.get(v).report() + "\n");
+                    break;
+
+                case 6:
+                    int j = 0;
+                    System.out.println("Selecione o projeto que gostaria de fazer intercambio:");
+                    for(Project project : projects){
+                        System.out.println(j+1 + " - " + project.title);
+                        j++;
+                    }
+                    int opcao = (read_int() - 1);
+                    user.projects.add(projects.get(opcao));
+                    break;
                 default:
                     break;
 
