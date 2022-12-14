@@ -278,6 +278,7 @@ public class Main {
                 user.setBolsa(bolsa);
                 
             }
+            System.out.println("Digite o nome do profissional ou \'fim\' caso nao tenha mais participantes");
             e_name = input.nextLine();
         }
         
