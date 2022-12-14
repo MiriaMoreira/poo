@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Date;
 
 public class User {
     
@@ -9,12 +7,13 @@ public class User {
     String email;
     ArrayList<Project> projects = new ArrayList<>();
     Bolsa bolsa;
+    private String city;
     
-    User(String name, String email, String password){
+    User(String name, String email, String password, String city){
         
         this.name = name;
         this.email = email;
-        
+        this.city = city;
         this.password = password;
     }
     
@@ -43,6 +42,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setCity(String city){
+        this.city = city;
     }
     
     boolean verify( String password) {

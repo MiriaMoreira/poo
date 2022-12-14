@@ -24,6 +24,7 @@ public class Main {
             System.out.println("0 - Sair do Sistema");
             System.out.println("1 - Fazer Login");
             System.out.println("2 - Criar Conta");
+            System.out.println("3 - Recuperar Senha");
             System.out.println("================================================\n");
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd");
@@ -39,7 +40,7 @@ public class Main {
 
             n = read_int();
             
-            String email, name, password;
+            String email, name, password, city;
 
             switch (n){
                 case 1:
@@ -77,6 +78,9 @@ public class Main {
                     System.out.println("\nDigite uma senha:");
                     password = input.nextLine();
 
+                    System.out.println("Digite o nome da cidade onde voce nasceu: ");
+                    city = input.nextLine();
+
                     System.out.println("\nDigite o tipo de usuario: \n");
                     System.out.println("1 - Aluno");
                     System.out.println("2 - Professor");
@@ -95,31 +99,31 @@ public class Main {
                         switch(type){
 
                             case 1:
-                                users.add(new Aluno(name, email, password));
+                                users.add(new Aluno(name, email, password, city));
                                 System.out.println("Usuario cadastrado\n");
                                 done = true;
                                 break;
 
                             case 2:
-                                users.add(new Professor(name, email, password));
+                                users.add(new Professor(name, email, password, city));
                                 System.out.println("Usuario cadastrado\n");
                                 done = true;
                                 break;
                             
                             case 3:
-                                users.add(new Pesquisador(name, email, password));
+                                users.add(new Pesquisador(name, email, password, city));
                                 System.out.println("Usuario cadastrado\n");
                                 done = true;
                                 break;
 
                             case 4:
-                                users.add(new Profissional(name, email, password));
+                                users.add(new Profissional(name, email, password, city));
                                 System.out.println("Usuario cadastrado\n");
                                 done = true;
                                 break;
                             
                             case 5:
-                                users.add(new Tecnico(name, email, password));
+                                users.add(new Tecnico(name, email, password, city));
                                 System.out.println("Usuario cadastrado\n");
                                 done = true;
                                 break;
@@ -132,6 +136,18 @@ public class Main {
 
                     
                     break;
+                
+                case 3:
+                    System.out.println("Digite seu email: ");
+                    String r_email = input.nextLine();
+                    User user = buscarEmail(users, r_email);
+                    System.out.println("Digite o nome da cidade onde voce nasceu: ");
+                    String n_city = input.nextLine();
+                    if(user.verify(n_city)){
+                        System.out.println("Digite a nova senha: ");
+                        String new_password = input.nextLine();
+                        user.setPassword(new_password);
+                    }
 
                 default:
                     break;
