@@ -201,7 +201,7 @@ public class Main {
 
             case 3:
                 System.out.println("O status atual do projeto e: " + project.getStatus());
-                project.nextStatus(project.getStatus());
+                project.nextStatus();
                 System.out.println("o novo status do projeto e: " + project.getStatus());
                 break;
             
@@ -316,10 +316,10 @@ public class Main {
 
         project.setParameters(projects.size()+1, title, description, project_period, coordinator, p_involved);
         projects.add(project);
-        projects.get(projects.size()-1).setStatus();
+        State state = projects.get(projects.size()-1).getStatus();
         
         System.out.println("Projeto adicionado");
-        System.out.println("Status do projeto: " + projects.get(projects.size()-1).getStatus());
+        System.out.println("Status do projeto: " + state.status());
         
     }
     

@@ -5,12 +5,13 @@ public class Project {
     public int idp;
     public String title;
     public String description;
-    public String status;
     Period project_period;
     String coordinator;
     ArrayList<String> p_involved = new ArrayList<String>();
     ArrayList<Activities> activities;
     public int payments = 1;
+    public State status;
+
     
 
     public void setParameters(int idp, String title, String description, Period project_period, 
@@ -22,34 +23,17 @@ public class Project {
         this.project_period = project_period;
         this.coordinator = coordinator;
         this.p_involved = p_involved;
-        this.status = "Em processo de criacao";
-    
+        this.status = new InProcessOfCreation();
     }
 
-    public void setStatus() {
-    	this.status = "Em processo de criacao";
-    }
     
-    public void nextStatus(String status){
-        switch(status){
-            case "Em processo de criacao":
-                this.status = "Iniciado";
-                break;
-            
-            case "Iniciado":
-                this.status = "Em andamento";
-                break;
-            case "Em andamento":
-                this.status = "Concluido";
-                break;
-            default:
-                this.status = "Em processo de criacao";
-                break;
-        }
-    }
     
-    public String getStatus() {
+    public State getStatus() {
     	return this.status;
+    }
+
+    public void nextStatus() {
+        this.status = this.status.changeStatus();
     }
 
     public void setTitle(String title){
@@ -77,7 +61,7 @@ public class Project {
         return  "ID do projeto: " + this.idp + "\n" + 
                 "Titulo " + this.title + "\n" + 
                 "Descricao: " + this.description + "\n" +
-                "Status: " + this.status + "\n" +
+                "Status: " + this.status.status() + "\n" +
                 "Data de inicio: " + this.project_period.toString_begin(this.project_period) + "\n" +
                 "Data de termino: " + this.project_period.toString_end(this.project_period) + "\n" +
                 "Coordenador do projeto: " + this.coordinator + "\n";
